@@ -52,7 +52,7 @@ putCache(key,data)
 ### Example
 ```javascript
 
-res.render('index', function(req,res) {
+app.get('index', function(req,res) {
    
 	cache.getCache("index", 1000 * 3600,
 		//when no cache
