@@ -1,6 +1,6 @@
 {
   "name": "torres-express-cache",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple callback flow for managing cache on expressjs",
   "main": "index.js",
   "scripts": {
