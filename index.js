@@ -5,6 +5,18 @@ var cache  = require('memory-cache'),
 var warning = chalk.yellow,
     success = chalk.green;
 
+var config = {
+	enabled : true,
+	verbose : true
+};
+
+/**
+ * Configure cache parameters
+ * @param  {[type]} options Object containing configuration
+ */
+exports.config = function(options) {
+	config = options;
+}
 /**
  * Reads cache form the key passed as parametter and sends data to callback. 
  * If not cache is found to the passed key, calls nocache callback. Then sends data to callback.
@@ -13,13 +25,15 @@ var warning = chalk.yellow,
  * @param  {Function} next    callback after reading cache or arfter data request
  */
 exports.getCache = function (key,cacheTime, nocache, next) {
-	if( production && cache.keys().indexOf(key) > -1 ){ 
-		console.log(success("CACHE GET cache " + key ));
+	if( config.enabled && cache.keys().indexOf(key) > -1 ){ 
+		if(config.verbose)
+			console.log(success("CACHE GET cache " + key ));
 		next(cache.get(key));
 	}else{
 		nocache(function(data){
-			if(production){
-				console.log( warning("CACHE PUT " + key + " for " + pretiffyTime(cacheTime) ) );
+			if(config.enabled){
+				if(config.verbose)
+					console.log( warning("CACHE PUT " + key + " for " + pretiffyTime(cacheTime) ) );
 				cache.put(key, data, cacheTime);
 			}
 			next(data);
@@ -32,7 +46,8 @@ exports.getCache = function (key,cacheTime, nocache, next) {
  * @return {[type]} [description]
  */
 exports.putCache = function (key,data){
-	console.log(warning("CACHE PUT " + key));
+	if(config.verbose)
+		console.log(warning("CACHE PUT " + key));
 	cache.put(key, data, cacheTime);
 }
 
