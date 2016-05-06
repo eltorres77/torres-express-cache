@@ -12,28 +12,22 @@ $ npm install torres-express-cache
 
 
 ```javascript
-
 var cache = require('torres-express-cache');
-
 var cachetime = 10000; //10s
 
 cache.getCache( "key" , cachetime ,
 	//when no cache
 	function(next){ 
-
 		//here your requests
 
-		//pass your data ass parameter to next and it is cached
+		//pass your data to next and it is cached
 		next(data);
 	},
 	//next
 	function(data){		
-		
 		//get cache or passed info
-
 	}
 );
-
 ```
 
 ```javascript
@@ -64,8 +58,8 @@ app.get('index', function(req,res) {
 			});
 		},
 		//next
-		function(data){		
-			res.info = data;
+		function(posts){		
+			res.info = posts;
 			res.render(req,res);
 		});
 	}
